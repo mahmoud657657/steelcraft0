@@ -4,11 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SteelCraft — أبواب وبوابات وشبك حماية</title>
-  <meta name="description" content="SteelCraft: تصنيع أبواب، بوابات، شبابيك، درابزينات وشبك حماية بمستوى تنفيذي فاخر. مقاسات دقيقة، خامات معتمدة، وتسليم ضمن الموعد.">
+  <meta name="description" content="SteelCraft: تصنيع أبواب، بوابات، شبابيك، درابزينات وشبك حماية بمستوى تنفيذي فاخر. مقاسات دقيقة، خامات معتمدة، وتشطيب مخملي.">
   <meta name="theme-color" content="#0f1216">
   <link rel="stylesheet" href="./styles.css">
 
-  <!-- لمسة فاخرة (ذهب مطفي × أسود فحمي) -->
   <style>
     :root {
       --ink:#0f1216; --card:#12161b; --soft:#161b21;
@@ -16,11 +15,8 @@
     }
     body{ background:var(--ink); color:#e8eaed }
     .nav{ background:rgba(18,22,27,.85); border-bottom:1px solid var(--line) }
-    .nav .inner{ gap:16px }
     .nav img{ height:44px; border-radius:12px; border:1px solid var(--line) }
     .nav strong{ font-weight:900; letter-spacing:.3px }
-    .links a{ padding:8px 12px; border-radius:12px }
-    .links a:hover{ background:#1a2027 }
 
     .hero{
       background:
@@ -29,13 +25,20 @@
         url('./assets/hero-bg.jpg') center/cover no-repeat;
       padding:96px 16px; text-align:center; border-bottom:1px solid var(--line)
     }
-    .label{ display:inline-block; padding:6px 12px; border:1px solid var(--gold); color:var(--gold); border-radius:999px; font-size:12px; letter-spacing:.5px }
-    .hero h1{ margin:12px 0 8px; font-size:clamp(28px,4.6vw,44px) }
+    .label{ display:inline-block; padding:6px 12px; border:1px solid var(--gold); color:var(--gold); border-radius:999px; font-size:12px }
+    .hero h1{
+      margin:12px 0 8px;
+      font-size:clamp(32px,6vw,56px);
+      background:linear-gradient(90deg,var(--gold),var(--gold-2));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      font-family:serif;
+      letter-spacing:2px;
+    }
     .hero p{ margin:0 auto 18px; max-width:760px; color:#cfd3da }
     .cta{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap }
     .btn{ padding:12px 18px; border-radius:12px; border:1px solid var(--gold); font-weight:800; cursor:pointer }
-    .btn-primary{ background:var(--gold); color:#101315; border-color:var(--gold); }
-    .btn-primary:hover{ filter:brightness(.98) }
+    .btn-primary{ background:var(--gold); color:#101315; }
     .btn-ghost{ background:transparent; color:var(--gold) }
 
     .bar{ background:var(--soft); border:1px solid var(--line); border-radius:16px; padding:10px 14px; margin-top:18px }
@@ -47,23 +50,7 @@
     .section h2{ margin:0 0 12px; font-size:22px; color:#fff }
     .card{ background:var(--card); border-color:var(--line) }
     .product img{ height:240px }
-    .badge{ background:#1b2128; border:1px solid var(--line) }
     .price{ color:var(--gold-2) }
-
-    .grid-3{ display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)) }
-    .step{ padding:18px }
-    .step .num{ width:28px; height:28px; border-radius:50%; background:var(--gold); color:#13171c; display:grid; place-items:center; font-weight:900 }
-
-    .cta-banner{ background:linear-gradient(180deg,#151a20,#13181d); border:1px solid var(--line); border-radius:16px; padding:20px; display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap }
-    footer{ color:#a8adb4; border-top:1px solid var(--line) }
-
-    /* موبايل */
-    .menu-toggle{ display:none; margin-inline-start:auto }
-    @media (max-width:760px){
-      .menu-toggle{ display:block }
-      .links{ display:none; position:absolute; top:60px; inset-inline-end:16px; background:#151a1f; border:1px solid var(--line); border-radius:14px; padding:10px; flex-direction:column; gap:8px }
-      .links.open{ display:flex }
-    }
   </style>
 
   <script type="module">
@@ -72,20 +59,17 @@
 
     window.addEventListener('load', async ()=>{
       updateCartCount();
-      // منتجات مختارة تدفع للشراء
       const grid = document.getElementById('featured');
       try{
         const products = await fetchProducts();
-        // أهم 4 عناصر فقط
         grid.innerHTML = products.slice(0,4).map(p => `
           <div class="card product">
             <a href="./product.html?id=${p.id}">
-              <img loading="eager" src="${p.image}" alt="${p.name}">
+              <img src="${p.image}" alt="${p.name}">
             </a>
             <div class="body">
               <a href="./product.html?id=${p.id}"><strong>${p.name}</strong></a>
-              <div class="price" style="margin-top:6px">${p.price.toFixed(2)} ₪</div>
-              <div class="small" style="opacity:.8">جاهز للتسليم • تفصيل حسب الطلب</div>
+              <div class="price">${p.price.toFixed(2)} ₪</div>
             </div>
           </div>
         `).join('');
@@ -95,12 +79,11 @@
 </head>
 <body>
 
-  <!-- هيدر رسمي -->
+  <!-- هيدر -->
   <nav class="nav">
     <div class="inner">
       <img src="./assets/logo.jpg" alt="شعار SteelCraft">
       <strong>SteelCraft</strong>
-      <button class="menu-toggle" onclick="toggleMenu()">☰</button>
       <div class="links">
         <a href="./index.html">الرئيسية</a>
         <a href="./catalog.html">الكاتالوج</a>
@@ -109,76 +92,33 @@
     </div>
   </nav>
 
-  <!-- HERO مخملي -->
+  <!-- HERO -->
   <header class="hero">
     <div class="container">
       <span class="label">تصنيع تنفيذي • خامات معتمدة</span>
-      <h1>حلول حديد جاهزة للتركيب</h1>
-      <p>أبواب، بوابات، شبك حماية، شبابيك ودرابزينات بمقاسات دقيقة وتشطيب نظيف. استلام ضمن الموعد، وسعر واضح من أول محادثة.</p>
+      <h1>STEELCRAFT</h1>
+      <p>أبواب، بوابات، شبك حماية، شبابيك ودرابزينات بمقاسات دقيقة وتشطيب نظيف. استلام مضمون وسعر واضح من أول محادثة.</p>
       <div class="cta">
-        <a href="./catalog.html"><button class="btn btn-primary">اطلب الآن من الكتالوج</button></a>
+        <a href="./catalog.html"><button class="btn btn-primary">تصفح الكتالوج</button></a>
         <a href="./order.html"><button class="btn btn-ghost">السلة / الإتمام</button></a>
       </div>
 
-      <!-- حقائق تنفيذية تقفل قرار الشراء -->
+      <!-- نقاط مختصرة (بدون "تسليم من 3–7 أيام") -->
       <div class="bar container">
         <ul>
           <li><span class="dot"></span> مقاسات على الطبيعة</li>
-          <li><span class="dot"></span> زجاج مقسّى/خيارات أقفال</li>
+          <li><span class="dot"></span> زجاج مقسّى / أقفال أمان</li>
           <li><span class="dot"></span> دهان مقاوم للصدأ</li>
-          <li><span class="dot"></span> تسليم من 3–7 أيام</li>
         </ul>
       </div>
     </div>
   </header>
 
   <main class="container">
-
-    <!-- منتجات مختارة -->
     <section class="section">
-      <h2>مختارات جاهزة</h2>
+      <h2>منتجات مختارة</h2>
       <div id="featured" class="grid"></div>
-      <div class="cta" style="margin-top:12px">
-        <a href="./catalog.html"><button class="btn btn-ghost">تصفّح كل المنتجات</button></a>
-      </div>
     </section>
-
-    <!-- خطوات الشراء (واضحة وسريعة) -->
-    <section class="section">
-      <h2>طريقة الطلب</h2>
-      <div class="grid-3">
-        <div class="card step">
-          <div class="num">1</div>
-          <h3 style="margin:10px 0 6px">اختيار المنتج</h3>
-          <div class="small">من الكتالوج أو تفصيل حسب الطلب.</div>
-        </div>
-        <div class="card step">
-          <div class="num">2</div>
-          <h3 style="margin:10px 0 6px">تأكيد المقاس</h3>
-          <div class="small">قياس على الطبيعة قبل التنفيذ.</div>
-        </div>
-        <div class="card step">
-          <div class="num">3</div>
-          <h3 style="margin:10px 0 6px">تصنيع وتسليم</h3>
-          <div class="small">تشطيب نظيف، تركيب وتسليم ضمن الموعد.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- بانر تحويل مباشر -->
-    <section class="section">
-      <div class="cta-banner">
-        <div>
-          <div style="font-weight:900; font-size:18px; color:var(--gold)">جاهز تنفّذ طلبك؟</div>
-          <div class="small" style="color:#cfd3da">اسحب المنتج للسلة، وأتم الطلب الآن أو راسلنا لعرض سعر فوري.</div>
-        </div>
-        <div class="cta">
-          <a href="./catalog.html"><button class="btn btn-primary">افتح الكتالوج</button></a>
-          <a href="https://wa.me/972590000000" target="_blank" rel="noopener"><button class="btn btn-ghost">واتساب مباشر</button></a>
-        </div>
-      </div>
-    </section>
-
   </main>
 
   <footer>© <span id="y"></span> SteelCraft — جميع الحقوق محفوظة</footer>

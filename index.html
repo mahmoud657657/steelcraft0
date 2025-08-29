@@ -3,12 +3,75 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SteelCraft — الرئيسية</title>
+  <title>SteelCraft — أعمال حديد احترافية</title>
+
+  <!-- SEO -->
+  <meta name="description" content="SteelCraft: أبواب، بوابات، شبابيك، درابزينات، وشبك حماية بتصاميم مودرن وكلاسيك وتفصيل حسب الطلب.">
+  <meta name="theme-color" content="#111">
+  <meta property="og:title" content="SteelCraft — فن الحديد والأمان">
+  <meta property="og:description" content="تصميم وتصنيع أبواب وبوابات وشبابيك ودرابزينات بجودة عالية.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="./assets/hero-bg.jpg">
+
   <link rel="stylesheet" href="./styles.css">
-  <script type="module">import {updateCartCount} from './app.js'; window.addEventListener('load', updateCartCount);</script>
-  <style>.hero{background:url('./assets/hero-bg.jpg') center/cover no-repeat; color:#111; padding:64px 16px;}</style>
+
+  <!-- تحسين بسيط للصفحة الرئيسية فقط -->
+  <style>
+    .hero {
+      background: linear-gradient(180deg, rgba(0,0,0,.55), rgba(0,0,0,.35)), url('./assets/hero-bg.jpg') center/cover no-repeat;
+      color: #fff;
+      padding: 84px 16px;
+      text-align: center;
+    }
+    .hero h1 { font-size: clamp(26px, 4vw, 40px); margin: 0 0 10px }
+    .hero p { margin: 0 auto 18px; max-width: 700px; opacity: .95 }
+    .cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap }
+    .cta a button { background:#fff; border-color:#fff }
+    .section { margin-top: 40px }
+    .section h2 { margin: 0 0 12px; font-size: 22px }
+    .service { padding: 18px; text-align:center }
+    .service h3 { margin: 10px 0 6px; font-size: 18px }
+    .pill { display:inline-block; padding:6px 10px; background:#111; color:#fff; border-radius:999px; font-size:12px }
+    .kpis { display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)) }
+    .kpi { padding:18px; text-align:center }
+    /* زر واتساب عائم */
+    .wa-float {
+      position: fixed; bottom: 18px; inset-inline-start: 18px; z-index: 50;
+      background:#25D366; color:#fff; border-radius:999px; padding:12px 16px; box-shadow: 0 10px 24px rgba(0,0,0,.15);
+      font-weight:700;
+    }
+    .wa-float:hover { filter: brightness(.95) }
+  </style>
+
+  <script type="module">
+    import {updateCartCount, fetchProducts} from './app.js';
+    window.addEventListener('load', async () => {
+      updateCartCount();
+
+      // اعرض عينات منتجات (أول 4)
+      const grid = document.getElementById('featured');
+      try{
+        const products = await fetchProducts();
+        grid.innerHTML = products.slice(0,4).map(p => `
+          <div class="card product">
+            <a href="./product.html?id=${p.id}">
+              <img src="${p.image}" alt="${p.name}">
+            </a>
+            <div class="body">
+              <a href="./product.html?id=${p.id}"><strong>${p.name}</strong></a>
+              <div class="price" style="margin-top:6px">${p.price.toFixed(2)} ₪</div>
+            </div>
+          </div>
+        `).join('');
+      }catch(e){
+        grid.innerHTML = `<div class="card" style="padding:16px">تعذّر تحميل المنتجات الآن.</div>`;
+      }
+    });
+  </script>
 </head>
 <body>
+
+  <!-- هيدر موحّد -->
   <nav class="nav">
     <div class="inner">
       <img src="./assets/logo.jpg" alt="شعار SteelCraft">
@@ -21,31 +84,84 @@
     </div>
   </nav>
 
-  <section class="hero">
+  <!-- HERO -->
+  <header class="hero">
     <div class="container">
-      <h1>فن الحديد والأمان</h1>
-      <p>أبواب، بوابات، شبابيك، درابزينات — تفصيل حسب الطلب.</p>
-      <a href="./catalog.html"><button>شوف الكتالوج</button></a>
+      <span class="pill">من التصميم للتنفيذ</span>
+      <h1>SteelCraft — فن الحديد والأمان</h1>
+      <p>أبواب، بوابات، شبابيك، درابزينات، وشبك حماية بتصنيع دقيق وتشطيب نظيف. بنفصّل حسب الطلب وبنسلّم بسرعة.</p>
+      <div class="cta">
+        <a href="./catalog.html"><button>شوف الكتالوج</button></a>
+        <a href="./order.html"><button>السلة / الإتمام</button></a>
+      </div>
     </div>
-  </section>
+  </header>
 
   <main class="container">
-    <div class="grid" id="sample"></div>
+
+    <!-- خدمات مختصرة -->
+    <section class="section">
+      <h2>خدماتنا</h2>
+      <div class="grid">
+        <div class="card service">
+          <div class="badge">أبواب</div>
+          <h3>أبواب حديد مودرن وكلاسيك</h3>
+          <div class="small">تصميمات دخول وخارجية مع زجاج مقسّى وخيارات أقفال أمان.</div>
+        </div>
+        <div class="card service">
+          <div class="badge">بوابات</div>
+          <h3>بوابات سحاب ومفصلية</h3>
+          <div class="small">هيكل متين وتشغيل سلس، مع تجهيز للأتمتة.</div>
+        </div>
+        <div class="card service">
+          <div class="badge">شبابيك</div>
+          <h3>شبابيك وشبك حماية</h3>
+          <div class="small">حماية بدون ما يروح جمال الواجهة.</div>
+        </div>
+        <div class="card service">
+          <div class="badge">درابزينات</div>
+          <h3>درابزين سلالم وبلكونات</h3>
+          <div class="small">مودرن/كلاسيك مع طلاء مقاوم للصدأ.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- منتجات مميزة -->
+    <section class="section">
+      <h2>منتجات مميزة</h2>
+      <div id="featured" class="grid">
+        <!-- يُعبّأ من app.js عند التحميل -->
+      </div>
+    </section>
+
+    <!-- لماذا نحن + أرقام -->
+    <section class="section">
+      <h2>ليش تختار SteelCraft؟</h2>
+      <div class="grid">
+        <div class="card" style="padding:18px">
+          <ul class="small" style="line-height:1.9">
+            <li>تفصيل حسب المقاس والتصميم.</li>
+            <li>خامات قوية وتشطيب نظيف.</li>
+            <li>ضمان تصنيع وخدمة ما بعد البيع.</li>
+            <li>تواصل سريع وتسليم ضمن المواعيد.</li>
+          </ul>
+        </div>
+        <div class="kpis">
+          <div class="card kpi"><div style="font-weight:900;font-size:24px">+250</div><div class="small">مشروع منجز</div></div>
+          <div class="card kpi"><div style="font-weight:900;font-size:24px">+120</div><div class="small">تصميم خاص</div></div>
+          <div class="card kpi"><div style="font-weight:900;font-size:24px">4.9/5</div><div class="small">رضا العملاء</div></div>
+          <div class="card kpi"><div style="font-weight:900;font-size:24px">7 أيام</div><div class="small">متوسط التنفيذ</div></div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <footer>© <span id="y"></span> SteelCraft</footer>
-  <script>
-    document.getElementById('y').textContent=new Date().getFullYear();
-    import('./app.js').then(m=>m.fetchProducts().then(ps=>{
-      document.getElementById('sample').innerHTML = ps.slice(0,2).map(p=>`
-        <div class="card product">
-          <a href="./product.html?id=${p.id}"><img src="${p.image}" alt="${p.name}"></a>
-          <div class="body">
-            <a href="./product.html?id=${p.id}"><strong>${p.name}</strong></a>
-            <div class="price">${p.price.toFixed(2)} ₪</div>
-          </div>
-        </div>`).join('');
-    }));
-  </script>
+  <!-- فوتر -->
+  <footer>© <span id="y"></span> SteelCraft — جميع الحقوق محفوظة</footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+
+  <!-- زر واتساب عائم (بدّل الرقم) -->
+  <a class="wa-float" href="https://wa.me/972590000000?text=%D8%A7%D9%84%D8%B3%D9%84%D8%A7%D9%85%20%D8%B9%D9%84%D9%8A%D9%83%D9%85%20%D8%B9%D9%86%D8%AF%D9%8A%20%D8%A7%D8%B3%D8%AA%D9%81%D8%B3%D8%A7%D8%B1%20%D8%AD%D9%88%D9%84%20%D8%B4%D8%BA%D9%84%20SteelCraft" target="_blank" rel="noopener">واتساب سريع</a>
 </body>
 </html>

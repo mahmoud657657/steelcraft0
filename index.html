@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SteelCraft — الرئيسية</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module">import {updateCartCount} from './app.js'; window.addEventListener('load', updateCartCount);</script>
+  <style>.hero{background:url('./assets/hero-bg.jpg') center/cover no-repeat; color:#111; padding:64px 16px;}</style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="inner">
+      <img src="./assets/logo.jpg" alt="شعار SteelCraft">
+      <strong>SteelCraft</strong>
+      <div class="links">
+        <a href="./index.html">الرئيسية</a>
+        <a href="./catalog.html">الكاتالوج</a>
+        <a href="./order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="container">
+      <h1>فن الحديد والأمان</h1>
+      <p>أبواب، بوابات، شبابيك، درابزينات — تفصيل حسب الطلب.</p>
+      <a href="./catalog.html"><button>شوف الكتالوج</button></a>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="grid" id="sample"></div>
+  </main>
+
+  <footer>© <span id="y"></span> SteelCraft</footer>
+  <script>
+    document.getElementById('y').textContent=new Date().getFullYear();
+    import('./app.js').then(m=>m.fetchProducts().then(ps=>{
+      document.getElementById('sample').innerHTML = ps.slice(0,2).map(p=>`
+        <div class="card product">
+          <a href="./product.html?id=${p.id}"><img src="${p.image}" alt="${p.name}"></a>
+          <div class="body">
+            <a href="./product.html?id=${p.id}"><strong>${p.name}</strong></a>
+            <div class="price">${p.price.toFixed(2)} ₪</div>
+          </div>
+        </div>`).join('');
+    }));
+  </script>
+</body>
+</html>

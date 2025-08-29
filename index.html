@@ -15,8 +15,14 @@
     }
     body{ background:var(--ink); color:#e8eaed }
     .nav{ background:rgba(18,22,27,.85); border-bottom:1px solid var(--line) }
-    .nav img{ height:44px; border-radius:12px; border:1px solid var(--line) }
     .nav strong{ font-weight:900; letter-spacing:.3px }
+
+    .logo {
+      height: 60px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      object-fit: contain;
+    }
 
     .hero{
       background:
@@ -82,7 +88,10 @@
   <!-- هيدر -->
   <nav class="nav">
     <div class="inner">
-      <img src="./assets/logo.jpg" alt="SteelCraft logo"class="logo">
+      <img src="./assets/logo.png"
+           alt="SteelCraft Logo"
+           class="logo"
+           onerror="this.onerror=null;this.src='./assets/logo.jpg'">
       <strong>SteelCraft</strong>
       <div class="links">
         <a href="./index.html">الرئيسية</a>
@@ -103,7 +112,7 @@
         <a href="./order.html"><button class="btn btn-ghost">السلة / الإتمام</button></a>
       </div>
 
-      <!-- نقاط مختصرة (بدون "تسليم من 3–7 أيام") -->
+      <!-- نقاط مختصرة -->
       <div class="bar container">
         <ul>
           <li><span class="dot"></span> مقاسات على الطبيعة</li>

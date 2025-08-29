@@ -3,55 +3,163 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>الكاتالوج</title>
+  <title>الكاتالوج — SteelCraft</title>
   <link rel="stylesheet" href="./styles.css">
+
+  <!-- مخملي رسمي -->
+  <style>
+    :root{
+      --ink:#0f1216; --card:#12161b; --soft:#161b21;
+      --line:#1e232b; --gold:#c7a86d; --gold-2:#e4c98a;
+    }
+    body{ background:var(--ink); color:#e8eaed }
+    .nav{ background:rgba(18,22,27,.9); border-bottom:1px solid var(--line) }
+    .nav strong{ font-weight:900; letter-spacing:.3px }
+
+    .page-head{ padding:28px 16px; border-bottom:1px solid var(--line);
+      background: radial-gradient(900px 280px at 50% -10%, rgba(199,168,109,.18), transparent 60%); }
+    .page-head h1{ margin:0; font-size:22px; color:#fff }
+
+    .layout{ max-width:var(--max); margin:auto; padding:16px; display:grid; gap:16px;
+      grid-template-columns: 260px 1fr; }
+    @media (max-width: 860px){ .layout{ grid-template-columns:1fr } }
+
+    /* الفلاتر */
+    .filters{ background:var(--soft); border:1px solid var(--line); border-radius:16px; padding:14px; position:sticky; top:76px }
+    .filters h3{ margin:0 0 10px; font-size:16px }
+    .filters .field{ display:flex; flex-direction:column; gap:6px; margin-bottom:12px }
+    .filters input, .filters select{
+      background:#0f1318; color:#e8eaed; border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+    }
+    .filters .actions{ display:flex; gap:8px; flex-wrap:wrap }
+    .filters .btn{ padding:10px 12px; border-radius:10px; border:1px solid var(--gold); cursor:pointer }
+    .filters .btn-primary{ background:var(--gold); color:#111 }
+    .filters .btn-ghost{ background:transparent; color:var(--gold) }
+
+    /* الشريط العلوي للنتائج */
+    .results-bar{ display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap; margin-bottom:12px }
+    .results-bar .count{ color:#cfd3da }
+    .results-bar select{
+      background:#0f1318; color:#e8eaed; border:1px solid var(--line); border-radius:10px; padding:10px 12px;
+    }
+
+    /* الشبكة */
+    .grid{ display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)) }
+    .card{ background:var(--card); border-color:var(--line) }
+    .product img{ height:230px }
+    .badge{ background:#1b2128; border:1px solid var(--line) }
+    .price{ color:var(--gold-2) }
+
+    .empty{ background:var(--soft); border:1px solid var(--line); border-radius:16px; padding:18px; text-align:center; color:#cfd3da }
+  </style>
+
   <script type="module">
     import {fetchProducts, addToCart, updateCartCount} from './app.js';
     window.addToCart = addToCart;
+
     document.addEventListener('DOMContentLoaded', async () => {
       updateCartCount();
-      const products = await fetchProducts();
+
+      // عناصر DOM
       const grid = document.getElementById('grid');
-      const q = document.getElementById('q');
-      const tag = document.getElementById('tag');
+      const q    = document.getElementById('q');
+      const tag  = document.getElementById('tag');
+      const minP = document.getElementById('minP');
+      const maxP = document.getElementById('maxP');
+      const sort = document.getElementById('sort');
+      const count= document.getElementById('count');
+
+      // تحميل المنتجات
+      let products = [];
+      try{
+        products = await fetchProducts();
+      }catch(e){
+        grid.innerHTML = `<div class="empty">تعذّر تحميل الكتالوج الآن.</div>`;
+        return;
+      }
+
+      // تعبئة التصنيفات + نطاق الأسعار
+      const tags = [...new Set(products.flatMap(p => p.tags || []))];
+      tag.innerHTML = `<option value="">كل التصنيفات</option>` + tags.map(t=>`<option>${t}</option>`).join('');
+      const prices = products.map(p=>Number(p.price)||0);
+      const minAll = Math.floor(Math.min(...prices));
+      const maxAll = Math.ceil(Math.max(...prices));
+      minP.value = String(minAll);
+      maxP.value = String(maxAll);
+      minP.min = "0"; maxP.min = "0";
+      minP.max = String(maxAll); maxP.max = String(maxAll);
+
+      // دالة الرسم بأزرار سلة آمنة
       function render(list){
-        grid.innerHTML = list.map(p => {
+        count.textContent = `(${list.length}) منتج`;
+        if(!list.length){
+          grid.innerHTML = `<div class="empty">لا توجد نتائج مطابقة للفلاتر المختارة.</div>`;
+          return;
+        }
+        grid.innerHTML = list.map(p=>{
           const payload = JSON.stringify(p).replace(/"/g,'&quot;');
           return `
-          <div class="card product">
-            <a href="./product.html?id=${p.id}"><img src="${p.image}" alt="${p.name}"></a>
-            <div class="body">
-              <div><a href="./product.html?id=${p.id}"><strong>${p.name}</strong></a></div>
-              <div class="small">${p.desc || ''}</div>
-              <div style="margin-top:8px">${(p.tags||[]).map(t=>`<span class='badge'>${t}</span>`).join('')}</div>
-              <div style="margin-top:10px" class="price">${p.price.toFixed(2)} ₪</div>
-              <div style="margin-top:10px"><button onclick="addToCart(JSON.parse(this.dataset.p))" data-p="${payload}">أضف للسلة</button></div>
+            <div class="card product">
+              <a href="./product.html?id=${p.id}">
+                <img loading="lazy" src="${p.image}" alt="${p.name}">
+              </a>
+              <div class="body">
+                <div><a href="./product.html?id=${p.id}"><strong>${p.name}</strong></a></div>
+                <div class="small" style="margin-top:4px;opacity:.85">${p.desc || ''}</div>
+                <div style="margin-top:8px">${(p.tags||[]).map(t=>`<span class="badge">${t}</span>`).join('')}</div>
+                <div class="price" style="margin-top:10px">${Number(p.price).toFixed(2)} ₪</div>
+                <div style="margin-top:10px">
+                  <button class="btn" style="padding:10px 12px;border-radius:10px;border:1px solid var(--gold);color:var(--gold)"
+                          onclick="addToCart(JSON.parse(this.dataset.p))" data-p="${payload}">أضف للسلة</button>
+                </div>
+              </div>
             </div>
-          </div>`
+          `;
         }).join('');
       }
-      render(products);
-      function filter(){
+
+      // الفلترة + الفرز
+      function apply(){
         const text = q.value.trim();
-        const tagVal = tag.value;
-        const list = products.filter(p => {
-          const matchesText = !text || p.name.includes(text) || (p.desc && p.desc.includes(text));
-          const matchesTag = !tagVal || (p.tags && p.tags.includes(tagVal));
-          return matchesText && matchesTag;
+        const tg   = tag.value;
+        const lo   = Number(minP.value||minAll);
+        const hi   = Number(maxP.value||maxAll);
+
+        let list = products.filter(p=>{
+          const byText = !text || p.name.includes(text) || (p.desc && p.desc.includes(text));
+          const byTag  = !tg || (p.tags && p.tags.includes(tg));
+          const price  = Number(p.price)||0;
+          const byPrice= price >= lo && price <= hi;
+          return byText && byTag && byPrice;
         });
+
+        switch(sort.value){
+          case 'price-asc':  list = list.sort((a,b)=>a.price-b.price); break;
+          case 'price-desc': list = list.sort((a,b)=>b.price-a.price); break;
+          case 'name-asc':   list = list.sort((a,b)=>a.name.localeCompare(b.name,'ar')); break;
+          case 'name-desc':  list = list.sort((a,b)=>b.name.localeCompare(a.name,'ar')); break;
+        }
+
         render(list);
       }
-      q.addEventListener('input', filter);
-      tag.addEventListener('change', filter);
-      const tags = [...new Set(products.flatMap(p => p.tags || []))];
-      tag.innerHTML = "<option value=''>كل التصنيفات</option>" + tags.map(t=>`<option>${t}</option>`).join('');
+
+      // أحداث
+      q.addEventListener('input', apply);
+      tag.addEventListener('change', apply);
+      minP.addEventListener('input', apply);
+      maxP.addEventListener('input', apply);
+      sort.addEventListener('change', apply);
+
+      // عرض أولي
+      render(products);
     });
   </script>
 </head>
 <body>
+
+  <!-- هيدر موحّد بدون لوجو -->
   <nav class="nav">
     <div class="inner">
-      <img src="./assets/logo.jpg" alt="شعار SteelCraft">
       <strong>SteelCraft</strong>
       <div class="links">
         <a href="./index.html">الرئيسية</a>
@@ -61,16 +169,74 @@
     </div>
   </nav>
 
-  <main class="container">
-    <div class="searchbar card">
-      <input id="q" placeholder="ابحث باسم المنتج أو الوصف">
-      <select id="tag"></select>
-      <a href="./order.html"><button>السلة / الإتمام</button></a>
+  <!-- رأس الصفحة -->
+  <div class="page-head">
+    <div class="container">
+      <h1>الكاتالوج <span id="count" class="small" style="color:#cfd3da"></span></h1>
     </div>
-    <div class="grid" id="grid" style="margin-top:16px"></div>
-  </main>
+  </div>
 
-  <footer>© <span id="y"></span> SteelCraft</footer>
+  <!-- المحتوى -->
+  <div class="layout">
+    <!-- الشريط الجانبي (فلاتر) -->
+    <aside class="filters">
+      <h3>فلترة</h3>
+      <div class="field">
+        <label for="q" class="small">بحث</label>
+        <input id="q" placeholder="ابحث باسم المنتج أو الوصف">
+      </div>
+
+      <div class="field">
+        <label for="tag" class="small">التصنيف</label>
+        <select id="tag"></select>
+      </div>
+
+      <div class="field">
+        <label class="small">السعر (₪)</label>
+        <div style="display:flex; gap:8px">
+          <input id="minP" type="number" placeholder="من">
+          <input id="maxP" type="number" placeholder="إلى">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-primary" onclick="document.getElementById('q').dispatchEvent(new Event('input'))">تطبيق</button>
+        <button class="btn btn-ghost" onclick="
+          q.value=''; tag.value=''; 
+          minP.value=minP.min||0; maxP.value=maxP.max||0;
+          q.dispatchEvent(new Event('input'));
+        ">مسح الفلاتر</button>
+      </div>
+    </aside>
+
+    <!-- النتائج -->
+    <main>
+      <div class="results-bar">
+        <div class="count" id="countMirror"></div>
+        <div>
+          <label class="small" for="sort" style="margin-inline-end:6px;color:#cfd3da">ترتيب حسب</label>
+          <select id="sort">
+            <option value="">افتراضي</option>
+            <option value="price-asc">السعر: من الأرخص</option>
+            <option value="price-desc">السعر: من الأغلى</option>
+            <option value="name-asc">الاسم: تصاعدي</option>
+            <option value="name-desc">الاسم: تنازلي</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="grid" class="grid"></div>
+    </main>
+  </div>
+
+  <script>
+    // مزامنة عدّاد النتائج أعلى/عنوان
+    const c = document.getElementById('count'), m = document.getElementById('countMirror');
+    const obs = new MutationObserver(()=>{ m.textContent = c.textContent; });
+    obs.observe(c, {childList:true});
+  </script>
+
+  <footer>© <span id="y"></span> SteelCraft — جميع الحقوق محفوظة</footer>
   <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
 </body>
 </html>

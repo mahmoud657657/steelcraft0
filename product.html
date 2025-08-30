@@ -3,33 +3,114 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>تفاصيل المنتج</title>
+  <title>تفاصيل المنتج — SteelCraft</title>
   <link rel="stylesheet" href="./styles.css">
+  <style>
+    :root{ --gold:#c7a86d; --line:#1e232b; --card:#12161b; --ink:#0f1216 }
+    body{ background:#0f1216; color:#e8eaed }
+    .wrap{ max-width:1100px; margin:auto; padding:16px }
+    .product-view{ display:grid; gap:16px; grid-template-columns: 1.1fr .9fr }
+    @media (max-width: 900px){ .product-view{ grid-template-columns:1fr } }
+    .gallery{ display:grid; gap:10px; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)) }
+    .hero-img{ width:100%; height:auto; border-radius:14px; border:1px solid var(--line) }
+    .box{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:16px }
+    .specs{ width:100%; border-collapse:collapse }
+    .specs th,.specs td{ border-bottom:1px solid #1c2430; padding:10px; text-align:right }
+    .specs th{ opacity:.8; font-weight:700; width:160px }
+    .extras li{ margin:6px 0 }
+    .btn{ padding:10px 12px; border-radius:10px; border:1px solid var(--gold); cursor:pointer }
+    .btn-primary{ background:var(--gold); color:#111; font-weight:800 }
+    .price-lg{ font-size:22px; font-weight:900; color:#e4c98a }
+    .badge{ background:#1b2128; border:1px solid #2a313b; border-radius:999px; padding:4px 10px; font-size:12px; display:inline-block; margin-inline-start:6px }
+  </style>
+
   <script type="module">
     import {fetchProducts, addToCart, updateCartCount} from './app.js';
-    window.addToCart=addToCart;
+    window.addToCart = addToCart;
+
     document.addEventListener('DOMContentLoaded', async ()=>{
       updateCartCount();
+
       const id = parseInt(new URLSearchParams(location.search).get('id'));
-      const p = (await fetchProducts()).find(x=>x.id===id);
-      const content=document.getElementById('content');
-      if(!p){ content.innerHTML="<p>المنتج غير موجود.</p>"; return; }
-      const payload = JSON.stringify(p).replace(/"/g,'&quot;');
-      content.innerHTML = `
-        <div class="card" style="padding:16px; max-width:800px; margin:auto">
-          <img src="${p.image}" alt="${p.name}" style="width:100%; height:auto; border-radius:12px; margin-bottom:16px">
-          <h2>${p.name}</h2>
-          <p class="small">${p.desc||""}</p>
-          <div class="price" style="margin:12px 0">${p.price.toFixed(2)} ₪</div>
-          <button onclick="addToCart(JSON.parse(this.dataset.p))" data-p="${payload}">أضف للسلة</button>
-        </div>`;
+      const products = await fetchProducts();
+      const p = products.find(x=>x.id===id);
+
+      const root = document.getElementById('root');
+      if(!p){ root.innerHTML = "<div class='box'>المنتج غير موجود.</div>"; return; }
+
+      // تجهيز مواصفات قابلة للعرض فقط إذا موجودة
+      const specs = p.specs || {};
+      const rows = [
+        ["العرض (سم)", specs.width_cm],
+        ["الارتفاع (سم)", specs.height_cm],
+        ["المادة", specs.material],
+        ["التشطيب", specs.finish],
+        ["الزجاج", specs.glass],
+        ["القفل", specs.lock],
+        ["المفصلات", specs.hinges],
+        ["الوزن (كجم)", specs.weight_kg]
+      ].filter(r => r[1] !== undefined && r[1] !== null && r[1] !== "");
+
+      const extras = Array.isArray(p.extras) ? p.extras : [];
+
+      // صور إضافية إن وجدت
+      const imgs = Array.isArray(p.images) && p.images.length ? p.images : [p.image];
+
+      // HTML
+      root.innerHTML = `
+        <div class="product-view">
+          <div>
+            <img class="hero-img" src="${imgs[0]}" alt="${p.name}">
+            ${imgs.length > 1 ? `
+              <div class="gallery" style="margin-top:10px">
+                ${imgs.slice(1).map(src=>`<img src="${src}" alt="${p.name}" style="width:100%;height:120px;object-fit:cover;border-radius:10px;border:1px solid var(--line);cursor:pointer" onclick="document.querySelector('.hero-img').src='${src}'">`).join('')}
+              </div>
+            ` : ``}
+          </div>
+
+          <div>
+            <div class="box">
+              <h2 style="margin:0 0 8px">${p.name}</h2>
+              <div style="margin:6px 0">
+                ${(p.tags||[]).map(t=>`<span class="badge">${t}</span>`).join('')}
+              </div>
+              <div class="price-lg" style="margin:10px 0">${Number(p.price).toFixed(2)} ₪</div>
+              <p class="small" style="opacity:.9; line-height:1.8">${p.desc || ""}</p>
+
+              <div style="display:flex; gap:10px; margin-top:12px; flex-wrap:wrap">
+                <button class="btn btn-primary" onclick='addToCart(${JSON.stringify(p)})'>أضف للسلة</button>
+                <a class="btn" style="color:var(--gold); text-decoration:none"
+                   href="https://wa.me/972590000000?text=${encodeURIComponent(`مرحبا، بدي تفاصيل أو عرض سعر للمنتج: ${p.name} (ID: ${p.id})`)}"
+                   target="_blank" rel="noopener">استفسار واتساب</a>
+              </div>
+            </div>
+
+            ${rows.length ? `
+              <div class="box" style="margin-top:12px">
+                <h3 style="margin:0 0 10px">المواصفات</h3>
+                <table class="specs">
+                  <tbody>
+                    ${rows.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')}
+                  </tbody>
+                </table>
+              </div>
+            ` : ``}
+
+            ${extras.length ? `
+              <div class="box" style="margin-top:12px">
+                <h3 style="margin:0 0 10px">إضافات اختيارية</h3>
+                <ul class="extras">${extras.map(x=>`<li>${x}</li>`).join('')}</ul>
+              </div>
+            ` : ``}
+          </div>
+        </div>
+      `;
     });
   </script>
 </head>
 <body>
   <nav class="nav">
     <div class="inner">
-      <img src="./assets/logo.jpg" alt="شعار SteelCraft">
       <strong>SteelCraft</strong>
       <div class="links">
         <a href="./index.html">الرئيسية</a>
@@ -38,8 +119,12 @@
       </div>
     </div>
   </nav>
-  <main class="container" id="content"></main>
+
+  <main class="wrap">
+    <div id="root"></div>
+  </main>
+
   <footer>© <span id="y"></span> SteelCraft</footer>
-  <script>document.getElementById('y').textContent=new Date().getFullYear()</script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
 </body>
 </html>

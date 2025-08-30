@@ -33,7 +33,7 @@ export function whatsappCheckout(){
   const lines = cart.map(p=>`• ${p.name} x${p.qty} = ${(p.qty*p.price).toFixed(2)}₪`);
   const total = cart.reduce((a,b)=>a+b.qty*b.price,0).toFixed(2);
   const msg = encodeURIComponent(`طلب جديد:\n${lines.join('\n')}\nالمجموع: ${total}₪`);
-  const phone="9720569672129"; // بدّل رقمك
+  const phone="972569672129"; // بدّل رقمك
   window.open(`https://wa.me/${phone}?text=${msg}`,"_blank");
 }
 document.addEventListener('DOMContentLoaded', updateCartCount);

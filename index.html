@@ -1,245 +1,233 @@
 <!doctype html>
-<html lang="ar" dir="rtl" class="no-js">
+<html lang="ar" dir="rtl">
 <head>
-  <!-- ===== Meta Base ===== -->
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SteelCraft — أبواب وبوابات وشبك حماية</title>
-  <meta name="description" content="SteelCraft: تصنيع وتنفيذ أبواب حديد، بوابات، شبك حماية، شبابيك ودرابزينات بتشطيب فاخر ومقاسات دقيقة.">
-
-  <!-- ===== Theming ===== -->
-  <meta name="color-scheme" content="dark light">
-  <meta name="theme-color" content="#0f1216">
-
-  <!-- ===== Performance Hints ===== -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-  <!-- لو عندك خط ويب خارجي، اعمل له preload هنا -->
-  <!-- <link rel="preload" as="font" href="assets/YourFont.woff2" type="font/woff2" crossorigin> -->
-
-  <!-- Preload للأستایل ثم تحميله عادي (تحسين LCP) -->
-  <link rel="preload" href="./styles.css" as="style">
-  <link rel="stylesheet" href="./styles.css">
-
-  <!-- ===== Open Graph / Twitter ===== -->
-  <meta property="og:locale" content="ar_AR">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="SteelCraft — أبواب وبوابات وشبك حماية">
-  <meta property="og:description" content="تنفيذ فاخر، خامات معتمدة، تسليم مضبوط.">
-  <meta property="og:image" content="assets/og-cover.jpg">
-  <meta property="og:url" content="./">
-  <meta name="twitter:card" content="summary_large_image">
-
-  <!-- ===== Structured Data (JSON-LD) ===== -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "SteelCraft",
-    "url": "",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "?q={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
-  }
-  </script>
-
-  <!-- ===== Critical Cosmetic (فوق الواجهة) ===== -->
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SteelCraft — فخامة الحديد</title>
+  <meta name="description" content="SteelCraft — أبواب وبوابات وشبك حماية بدرجة تنفيذ ملكية.">
+  <meta name="theme-color" content="#0B0E13">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="stylesheet" href="styles.css">
   <style>
     :root{
-      --ink:#0f1216; --card:#12161b; --soft:#161b21;
-      --line:#1e232b; --gold:#c7a86d; --gold-2:#e4c98a;
-      --max:1100px;
+      --ink:#0B0E13; --panel:#0F141C; --line:#1A2230;
+      --gold:#D8BA74; --gold-2:#F0DCA4; --gold-3:#A98847;
+      --max:1180px;
     }
-    /* Base */
+    *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    .no-js body{visibility:visible}
-    body{ margin:0; background:var(--ink); color:#e8eaed; font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", "Noto Naskh Arabic", Arial, sans-serif }
-    a{ color:inherit; text-decoration:none }
-    img{ max-width:100%; display:block }
-    .container{ max-width:var(--max); margin-inline:auto; padding-inline:16px }
-    .sr-only{ position:absolute !important; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px) }
+    body{margin:0;background:var(--ink);color:#E9ECF1;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic","Noto Kufi Arabic",Arial,sans-serif}
 
     /* Nav */
-    .nav{ position:sticky; top:0; z-index:100; backdrop-filter:saturate(1.2) blur(6px);
-      background:rgba(18,22,27,.85); border-bottom:1px solid var(--line) }
-    .nav .inner{ display:flex; align-items:center; gap:16px; height:64px; }
-    .brand{ font-weight:900; letter-spacing:.3px }
-    .links{ margin-inline-start:auto; display:flex; gap:10px }
-    .links a{ padding:8px 12px; border-radius:12px }
-    .links a:focus-visible, .links a:hover{ outline:none; background:#1a2027 }
+    .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.2) blur(10px);
+      background:linear-gradient(180deg,rgba(15,20,28,.85),rgba(15,20,28,.65));border-bottom:1px solid var(--line)}
+    .nav .inner{max-width:var(--max);margin:auto;display:flex;align-items:center;gap:16px;padding:14px 16px}
+    .brand{font-weight:900;letter-spacing:.4px}
+    .links{margin-inline-start:auto;display:flex;gap:10px}
+    .links a{padding:8px 12px;border-radius:12px}
+    .links a:hover{background:#131A24}
 
-    /* Hero */
+    /* HERO — cinematic */
     .hero{
+      position:relative; isolation:isolate; overflow:hidden;
       background:
-        radial-gradient(1200px 420px at 50% -10%, rgba(199,168,109,.22), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.58)),
-        url('./assets/hero-bg.jpg') center/cover no-repeat;
+        radial-gradient(1100px 420px at 60% -10%, rgba(216,186,116,.18), transparent 60%),
+        radial-gradient(800px 300px at 10% 10%, rgba(168,136,71,.14), transparent 60%),
+        linear-gradient(180deg,#0B0E13 0%,#0B0E13 30%,#0D1118 100%);
       border-bottom:1px solid var(--line);
     }
-    .hero-wrap{ padding:96px 16px; text-align:center }
-    .label{ display:inline-block; padding:6px 12px; border:1px solid var(--gold); color:var(--gold);
-      border-radius:999px; font-size:12px; letter-spacing:.3px }
-    h1.display{
-      margin:12px 0 8px; line-height:1.1;
-      font-size:clamp(32px,6vw,56px);
-      background:linear-gradient(90deg,var(--gold),var(--gold-2));
+    .hero::before, .hero::after{
+      content:""; position:absolute; inset:-20% -20% auto auto; height:120vh; width:120vh;
+      background:conic-gradient(from 0deg, transparent 0 30%, rgba(216,186,116,.12) 35% 45%, transparent 50% 100%);
+      filter:blur(40px); opacity:.45; transform:rotate(8deg);
+      animation:spin 28s linear infinite;
+    }
+    .hero::after{
+      inset:auto auto -40% -10%; height:100vh; width:100vh; filter:blur(50px); opacity:.25; animation:spin 36s linear infinite reverse;
+    }
+    @keyframes spin{to{transform:rotate(368deg)}}
+
+    .hero-wrap{max-width:var(--max);margin:auto;padding:100px 16px 64px;display:grid;gap:26px;grid-template-columns:1.05fr .95fr}
+    @media (max-width:980px){.hero-wrap{grid-template-columns:1fr;padding-top:84px}}
+
+    .slab{
+      perspective:1000px;
+      display:grid;place-items:center; min-height:420px; position:relative;
+    }
+    .plate{
+      position:relative; padding:34px 24px; border-radius:22px;
+      background:linear-gradient(180deg, rgba(28,36,48,.6), rgba(18,24,34,.6));
+      border:1px solid #202735; box-shadow:0 30px 80px rgba(0,0,0,.45) inset, 0 10px 40px rgba(0,0,0,.35);
+      transform:rotateX(10deg) rotateY(-10deg);
+    }
+    .crest{
+      font-family:serif; font-weight:900; letter-spacing:4px; line-height:1;
+      font-size:clamp(38px,7vw,78px); text-align:center; margin:0;
+      background:linear-gradient(92deg,var(--gold-3),var(--gold),var(--gold-2),var(--gold));
       -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-      font-family:serif; letter-spacing:2px;
+      position:relative;
     }
-    .lead{ margin:0 auto 18px; max-width:760px; color:#cfd3da }
+    /* sheen */
+    .crest::after{
+      content:""; position:absolute; inset:0; 
+      background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,.18) 45%,transparent 60%);
+      mix-blend-mode:overlay; transform:translateX(-120%) skewX(-18deg); 
+      animation:sheen 6s ease-in-out infinite 1s;
+      pointer-events:none;
+    }
+    @keyframes sheen{50%{transform:translateX(120%) skewX(-18deg)}}
 
-    /* Controls */
-    .cta{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap }
-    .btn{ padding:12px 18px; border-radius:12px; border:1px solid var(--gold); font-weight:800; cursor:pointer }
-    .btn-primary{ background:var(--gold); color:#101315; border-color:var(--gold) }
-    .btn-ghost{ background:transparent; color:var(--gold) }
-    .btn:focus-visible{ outline:2px solid var(--gold) }
+    .subtitle{color:#BFC6D0; text-align:center; margin:10px auto 0; max-width:560px}
+    .foil{
+      position:absolute; inset:auto 10% -18% auto; width:320px; height:180px; border-radius:24px; opacity:.55;
+      background:radial-gradient(160px 80px at 70% 20%,rgba(240,220,164,.35),transparent 60%),
+                 linear-gradient(180deg,rgba(240,220,164,.08),rgba(168,136,71,.08));
+      border:1px solid rgba(240,220,164,.18); filter:blur(10px);
+      transform:rotate(-8deg);
+    }
+    @media (max-width:980px){ .foil{display:none} }
 
-    /* Selling points */
-    .bar{ background:var(--soft); border:1px solid var(--line); border-radius:16px; padding:10px 14px; margin-top:18px }
-    .bar ul{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; padding:0; margin:0; list-style:none }
-    .bar li{ display:flex; gap:10px; align-items:center; color:#c8ccd2 }
-    .dot{ width:8px; height:8px; border-radius:50%; background:var(--gold) }
+    /* actions */
+    .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px}
+    .btn{padding:13px 18px;border-radius:14px;border:1px solid var(--gold);cursor:pointer;font-weight:800}
+    .btn-primary{background:var(--gold);color:#111;border-color:var(--gold)}
+    .btn-ghost{background:transparent;color:var(--gold)}
+    .btn:focus-visible{outline:2px solid var(--gold)}
 
-    /* Cards */
-    .section{ margin-top:44px }
-    .section h2{ margin:0 0 12px; font-size:22px; color:#fff }
-    .grid{ display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)) }
-    .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden }
-    .product .media{ aspect-ratio: 4 / 3; background:#0f1318; display:block; object-fit:cover }
-    .body{ padding:12px }
-    .price{ color:var(--gold-2); font-weight:900; }
+    /* selling points */
+    .bar{background:#0E141C;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:18px}
+    .bar ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;padding:0;margin:0;list-style:none}
+    .bar li{display:flex;gap:10px;align-items:center;color:#C9CFD8}
+    .dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
 
-    /* Skeleton loading */
-    .skeleton{ animation: shimmer 1.3s linear infinite; background:
-      linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.18), rgba(255,255,255,.08));
-      background-size:200% 100% }
-    .sk-card{ border-radius:16px; border:1px solid var(--line); background:var(--card); overflow:hidden }
-    .sk-media{ height:160px }
-    .sk-line{ height:12px; margin:10px 12px; border-radius:8px }
-    @keyframes shimmer{ from{background-position:200% 0} to{background-position:-200% 0} }
-
-    /* Motion respect */
-    @media (prefers-reduced-motion: reduce){
-      *{ animation:none !important; transition:none !important; scroll-behavior:auto !important }
+    /* Featured */
+    .section{max-width:var(--max);margin:44px auto 0;padding:0 16px}
+    .section h2{margin:0 0 12px}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+    .card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+    .media{aspect-ratio:4/3;object-fit:cover;background:#0A0F16;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+    .card:hover .media{transform:scale(1.04)}
+    .body{padding:12px}
+    .price{color:var(--gold-2);font-weight:900}
+    .reflect::after{
+      content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.22;
+      background:linear-gradient(12deg,transparent 0%,rgba(255,255,255,.15) 50%,transparent 80%);
+      transform:translateY(20%)
     }
 
-    footer{ border-top:1px solid var(--line); color:#a8adb4; padding:20px 16px; text-align:center }
+    /* floating sparks */
+    .spark{position:absolute; width:2px;height:2px; background:var(--gold-2); border-radius:2px; opacity:.7}
+    .s1{top:12%; left:16%; animation:rise 9s linear infinite}
+    .s2{top:22%; left:82%; animation:rise 11s linear infinite 1s}
+    .s3{top:46%; left:8%; animation:rise 13s linear infinite .3s}
+    @keyframes rise{0%{transform:translateY(0)} 100%{transform:translateY(-120vh)}}
+
+    /* magnetic buttons */
+    .magnet{position:relative; overflow:hidden}
+    .magnet span{position:relative;z-index:2}
+    .magnet::before{
+      content:"";position:absolute;inset:-60% -40%;background:radial-gradient(180px 120px at var(--x,50%) var(--y,50%),rgba(255,255,255,.12),transparent 60%);
+      transition:transform .15s; z-index:1;
+    }
+
+    footer{border-top:1px solid var(--line);text-align:center;color:#A8AFB8;padding:20px 16px;margin-top:40px}
+    @media (prefers-reduced-motion:reduce){
+      .hero::before,.hero::after,.crest::after,.media,.s1,.s2,.s3{animation:none !important;transform:none !important}
+    }
   </style>
-
-  <!-- JS flag for no-js class -->
-  <script>document.documentElement.classList.remove('no-js');</script>
 </head>
 <body>
-  <a class="sr-only" href="#main">تجاوز إلى المحتوى</a>
-
-  <!-- ===== NAV ===== -->
-  <nav class="nav" aria-label="شريط التنقل">
-    <div class="inner container">
-      <span class="brand" aria-label="العلامة">SteelCraft</span>
-      <div class="links" role="menubar">
-        <a role="menuitem" href="./index.html" aria-current="page">الرئيسية</a>
-        <a role="menuitem" href="./catalog.html">الكاتالوج</a>
-        <a role="menuitem" class="cart-pill" href="./order.html">الطلبات <span class="cart-count">0</span></a>
+  <!-- NAV -->
+  <nav class="nav" aria-label="التنقل">
+    <div class="inner">
+      <strong class="brand">SteelCraft</strong>
+      <div class="links">
+        <a href="index.html" aria-current="page">الرئيسية</a>
+        <a href="catalog.html">الكاتالوج</a>
+        <a href="order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
       </div>
     </div>
   </nav>
 
-  <!-- ===== HERO ===== -->
-  <header class="hero" role="banner">
-    <div class="hero-wrap container">
-      <span class="label">تصنيع تنفيذي • خامات معتمدة</span>
-      <h1 class="display" aria-label="SteelCraft">STEELCRAFT</h1>
-      <p class="lead">أبواب، بوابات، شبك حماية، شبابيك ودرابزينات بمقاسات دقيقة وتشطيب نظيف. استلام مضمون وسعر واضح من أول محادثة.</p>
-      <div class="cta" role="group" aria-label="الاجراءات">
-        <a href="./catalog.html"><button class="btn btn-primary">تصفح الكتالوج</button></a>
-        <a href="./order.html"><button class="btn btn-ghost">السلة / الإتمام</button></a>
+  <!-- HERO -->
+  <header class="hero">
+    <!-- sparky ambience -->
+    <i class="spark s1"></i><i class="spark s2"></i><i class="spark s3"></i>
+
+    <div class="hero-wrap">
+      <div class="slab">
+        <div class="plate reflect">
+          <h1 class="crest" aria-label="STEELCRAFT">STEELCRAFT</h1>
+          <p class="subtitle">فخامة حديد بتشطيب ملكي — أبواب، بوابات، شبك حماية، شبابيك ودرابزينات بمعايير تنفيذ عالية الدقة.</p>
+          <div class="cta" role="group" aria-label="إجراءات">
+            <a href="catalog.html"><button class="btn btn-primary magnet"><span>تصفّح الكتالوج</span></button></a>
+            <a href="order.html"><button class="btn btn-ghost magnet"><span>السلة / الإتمام</span></button></a>
+          </div>
+        </div>
+        <div class="foil" aria-hidden="true"></div>
       </div>
 
-      <div class="bar container" aria-label="نقاط القوة">
-        <ul>
-          <li><span class="dot"></span> مقاسات على الطبيعة</li>
-          <li><span class="dot"></span> زجاج مقسّى / أقفال أمان</li>
-          <li><span class="dot"></span> دهان مقاوم للصدأ</li>
-        </ul>
+      <div>
+        <div class="bar">
+          <ul>
+            <li><span class="dot"></span> مقاسات على الطبيعة</li>
+            <li><span class="dot"></span> زجاج مقسّى / أقفال أمان</li>
+            <li><span class="dot"></span> دهان فرن مقاوم للصدأ</li>
+          </ul>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- ===== MAIN ===== -->
-  <main id="main" class="container" tabindex="-1">
-    <section class="section" aria-labelledby="featured-title">
-      <h2 id="featured-title">منتجات مختارة</h2>
-
-      <!-- Skeletons (يتشالوا بعد التحميل) -->
-      <div id="sk" class="grid" aria-hidden="true">
-        <div class="sk-card"><div class="skeleton sk-media"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:60%"></div></div>
-        <div class="sk-card"><div class="skeleton sk-media"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:60%"></div></div>
-        <div class="sk-card"><div class="skeleton sk-media"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:60%"></div></div>
-        <div class="sk-card"><div class="skeleton sk-media"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:60%"></div></div>
-      </div>
-
-      <div id="featured" class="grid" aria-live="polite" aria-busy="true"></div>
-    </section>
-  </main>
+  <!-- FEATURED -->
+  <section class="section" aria-labelledby="f">
+    <h2 id="f">مختارات هذا الأسبوع</h2>
+    <div id="featured" class="grid" aria-live="polite" aria-busy="true">
+      <!-- Skeleton بسيط -->
+      <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite"></div><style>@keyframes shine{to{background-position:-200% 0}} </style><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
+      <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite .1s"></div><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
+      <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite .2s"></div><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
+      <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite .3s"></div><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
+    </div>
+  </section>
 
   <footer>© <span id="y"></span> SteelCraft — جميع الحقوق محفوظة</footer>
 
-  <!-- ===== App Code (Module) ===== -->
   <script type="module">
     import {updateCartCount, fetchProducts} from './app.js';
+    // سنة
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-    const yearSpan = document.getElementById('y');
-    yearSpan.textContent = new Date().getFullYear();
+    // أزرار مغناطيسية
+    for (const b of document.querySelectorAll('.magnet')){
+      b.addEventListener('pointermove', e=>{
+        const r=b.getBoundingClientRect(), x=(e.clientX-r.left)/r.width*100, y=(e.clientY-r.top)/r.height*100;
+        b.style.setProperty('--x', x+'%'); b.style.setProperty('--y', y+'%');
+      });
+    }
 
-    // Helper: يبني كرت منتج
-    const card = (p) => `
-      <article class="card product" itemscope itemtype="https://schema.org/Product">
-        <a href="./product.html?id=${p.id}" aria-label="تفاصيل ${p.name}">
-          <img class="media" loading="lazy"
-               src="${p.image}"
-               srcset="${p.image} 1x"
-               sizes="(max-width: 600px) 100vw, 33vw"
-               alt="${p.name}" itemprop="image">
-        </a>
-        <div class="body">
-          <div>
-            <a href="./product.html?id=${p.id}">
-              <strong itemprop="name">${p.name}</strong>
-            </a>
-          </div>
-          <meta itemprop="sku" content="${p.id}">
-          <div class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer" style="margin-top:8px">
-            <span itemprop="price">${Number(p.price).toFixed(2)}</span>
-            <span itemprop="priceCurrency">ILS</span> ₪
-            <link itemprop="availability" href="https://schema.org/InStock">
-          </div>
-        </div>
-      </article>`;
-
+    // تحميل المنتجات المختارة
     async function boot(){
       try{
         updateCartCount();
-
+        const list = (await fetchProducts()).slice(0,4);
         const grid = document.getElementById('featured');
-        const sk = document.getElementById('sk');
-
-        const products = await fetchProducts();
-        const top = products.slice(0,4);
-
-        grid.innerHTML = top.map(card).join('');
         grid.setAttribute('aria-busy','false');
-        sk.remove(); // شيل السكلتون
-      }catch(e){
-        console.error(e);
-        const grid = document.getElementById('featured');
-        grid.innerHTML = `<div class="card" style="padding:16px">تعذّر التحميل الآن.</div>`;
-        grid.setAttribute('aria-busy','false');
-        // خفّض تأثير السكلتون لو فشل التحميل
-        const sk = document.getElementById('sk');
-        if(sk) sk.remove();
+        grid.innerHTML = list.map(p=>`
+          <article class="card reflect">
+            <a href="product.html?id=${p.id}">
+              <img class="media" loading="lazy" src="${p.image}" alt="${p.name}">
+            </a>
+            <div class="body">
+              <div><a href="product.html?id=${p.id}"><strong>${p.name}</strong></a></div>
+              <div class="price" style="margin-top:8px">${Number(p.price).toFixed(2)} ₪</div>
+            </div>
+          </article>
+        `).join('');
+      }catch(err){
+        console.error(err);
+        document.getElementById('featured').innerHTML =
+          `<div class="card" style="padding:16px">تعذّر تحميل المنتجات الآن.</div>`;
       }
     }
     boot();

@@ -3,136 +3,151 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>SteelCraft — فخامة الحديد</title>
-  <meta name="description" content="SteelCraft — أبواب وبوابات وشبك حماية بدرجة تنفيذ ملكية.">
-  <meta name="theme-color" content="#0B0E13">
-  <link rel="preload" href="styles.css" as="style">
-  <link rel="stylesheet" href="styles.css">
+  <title>SteelCraft — فخامة الحديد • إصدار Ultra</title>
+  <meta name="description" content="SteelCraft — واجهة رئيسية فاخرة لأبواب وبوابات وشبك حماية بمعايير تنفيذ ملكي.">
+  <meta name="theme-color" content="#0A0D12">
+  <link rel="preload" href="/fonts/Inter-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <style>
+    /* ——————— Theme ——————— */
     :root{
-      --ink:#0B0E13; --panel:#0F141C; --line:#1A2230;
-      --gold:#D8BA74; --gold-2:#F0DCA4; --gold-3:#A98847;
-      --max:1180px;
+      --ink:#0A0D12;        /* خلفية عميقة */
+      --panel:#0F141C;      /* لوحات */
+      --soft:#0C1117;       /* ظلال */
+      --line:#1B2431;       /* حدود */
+      --gold:#D8BA74;       /* ذهبي أساسي */
+      --gold-2:#F0DCA4;     /* ذهبي فاتح */
+      --gold-3:#A8863F;     /* ذهبي داكن */
+      --text:#E9EDF3;       /* نص */
+      --muted:#B9C2CE;      /* ثانوي */
+      --max:1200px;         /* عرض المحتوى */
     }
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;background:var(--ink);color:#E9ECF1;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic","Noto Kufi Arabic",Arial,sans-serif}
+    body{margin:0;background:var(--ink);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic","Noto Kufi Arabic",Arial,sans-serif;line-height:1.5;overflow-x:hidden}
 
-    /* Nav */
-    .nav{position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.2) blur(10px);
-      background:linear-gradient(180deg,rgba(15,20,28,.85),rgba(15,20,28,.65));border-bottom:1px solid var(--line)}
+    /* ——————— Global FX: حبيبات خفيفة ولمعة ——————— */
+    body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.08;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 60 60'%3E%3Cg fill='%23ffffff'%3E%3Ccircle cx='1' cy='1' r='.6'/%3E%3Ccircle cx='29' cy='11' r='.6'/%3E%3Ccircle cx='59' cy='7' r='.6'/%3E%3Ccircle cx='11' cy='37' r='.6'/%3E%3Ccircle cx='41' cy='43' r='.6'/%3E%3Ccircle cx='21' cy='59' r='.6'/%3E%3C/g%3E%3C/svg%3E");}
+
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:var(--max);margin:auto;padding-inline:16px}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.02)}
+
+    /* ——————— NAV ——————— */
+    .nav{position:sticky;top:0;z-index:60;backdrop-filter:saturate(1.2) blur(10px);
+      background:linear-gradient(180deg,rgba(12,17,23,.85),rgba(12,17,23,.55));border-bottom:1px solid var(--line)}
     .nav .inner{max-width:var(--max);margin:auto;display:flex;align-items:center;gap:16px;padding:14px 16px}
-    .brand{font-weight:900;letter-spacing:.4px}
-    .links{margin-inline-start:auto;display:flex;gap:10px}
-    .links a{padding:8px 12px;border-radius:12px}
-    .links a:hover{background:#131A24}
+    .brand{font-weight:900;letter-spacing:.5px}
+    .brand .crest{letter-spacing:3px;background:linear-gradient(92deg,var(--gold-3),var(--gold),var(--gold-2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .links{margin-inline-start:auto;display:flex;gap:6px}
+    .links a{padding:10px 12px;border-radius:12px}
+    .links a[aria-current="page"],.links a:hover{background:#121925}
+    .cart-pill{position:relative}
+    .cart-count{position:absolute;inset:auto -6px -6px auto;background:var(--gold);color:#111;border-radius:10px;padding:1px 6px;font-size:12px;font-weight:900;border:1px solid #0002}
 
-    /* HERO — cinematic */
-    .hero{
-      position:relative; isolation:isolate; overflow:hidden;
+    /* ——————— HERO: مشهد سينمائي ——————— */
+    .hero{position:relative;isolation:isolate;overflow:hidden;border-bottom:1px solid var(--line);
       background:
-        radial-gradient(1100px 420px at 60% -10%, rgba(216,186,116,.18), transparent 60%),
-        radial-gradient(800px 300px at 10% 10%, rgba(168,136,71,.14), transparent 60%),
-        linear-gradient(180deg,#0B0E13 0%,#0B0E13 30%,#0D1118 100%);
-      border-bottom:1px solid var(--line);
+        radial-gradient(1200px 480px at 70% -10%, rgba(216,186,116,.18), transparent 60%),
+        radial-gradient(900px 340px at 0% 0%, rgba(168,136,71,.14), transparent 60%),
+        linear-gradient(180deg,#0A0D12 0%,#0A0D12 30%,#0C1117 100%);
     }
-    .hero::before, .hero::after{
-      content:""; position:absolute; inset:-20% -20% auto auto; height:120vh; width:120vh;
-      background:conic-gradient(from 0deg, transparent 0 30%, rgba(216,186,116,.12) 35% 45%, transparent 50% 100%);
-      filter:blur(40px); opacity:.45; transform:rotate(8deg);
-      animation:spin 28s linear infinite;
+    .hero::before,.hero::after{
+      content:"";position:absolute;inset:-10% -10% auto auto;height:120vh;width:120vh;opacity:.4;filter:blur(38px);
+      background:conic-gradient(from 0deg,transparent 0 30%, rgba(216,186,116,.12) 35% 45%, transparent 50% 100%);
+      animation:spin 28s linear infinite
     }
-    .hero::after{
-      inset:auto auto -40% -10%; height:100vh; width:100vh; filter:blur(50px); opacity:.25; animation:spin 36s linear infinite reverse;
-    }
+    .hero::after{inset:auto auto -38% -14%;height:100vh;width:100vh;opacity:.25;animation:spin 36s linear infinite reverse}
     @keyframes spin{to{transform:rotate(368deg)}}
 
-    .hero-wrap{max-width:var(--max);margin:auto;padding:100px 16px 64px;display:grid;gap:26px;grid-template-columns:1.05fr .95fr}
-    @media (max-width:980px){.hero-wrap{grid-template-columns:1fr;padding-top:84px}}
+    .hero-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;max-width:var(--max);margin:auto;padding:96px 16px 72px}
+    @media (max-width:1020px){.hero-wrap{grid-template-columns:1fr;padding-top:88px}}
 
-    .slab{
-      perspective:1000px;
-      display:grid;place-items:center; min-height:420px; position:relative;
+    /* لوحة لوجو ثلاثية الأبعاد */
+    .slab{perspective:1200px;display:grid;place-items:center;min-height:460px;position:relative}
+    .plate{position:relative;padding:36px 28px;border-radius:22px;border:1px solid #202735;
+      background:linear-gradient(180deg, rgba(28,36,48,.55), rgba(16,22,32,.55));
+      box-shadow:0 35px 90px rgba(0,0,0,.48) inset, 0 12px 44px rgba(0,0,0,.32);
+      transform:rotateX(10deg) rotateY(-10deg)
     }
-    .plate{
-      position:relative; padding:34px 24px; border-radius:22px;
-      background:linear-gradient(180deg, rgba(28,36,48,.6), rgba(18,24,34,.6));
-      border:1px solid #202735; box-shadow:0 30px 80px rgba(0,0,0,.45) inset, 0 10px 40px rgba(0,0,0,.35);
-      transform:rotateX(10deg) rotateY(-10deg);
-    }
-    .crest{
-      font-family:serif; font-weight:900; letter-spacing:4px; line-height:1;
-      font-size:clamp(38px,7vw,78px); text-align:center; margin:0;
-      background:linear-gradient(92deg,var(--gold-3),var(--gold),var(--gold-2),var(--gold));
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-      position:relative;
-    }
-    /* sheen */
-    .crest::after{
-      content:""; position:absolute; inset:0; 
-      background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,.18) 45%,transparent 60%);
-      mix-blend-mode:overlay; transform:translateX(-120%) skewX(-18deg); 
-      animation:sheen 6s ease-in-out infinite 1s;
-      pointer-events:none;
-    }
+    .crestTitle{font-family:serif;font-weight:900;letter-spacing:4px;line-height:1;font-size:clamp(40px,7.4vw,86px);text-align:center;margin:0;
+      background:linear-gradient(92deg,var(--gold-3),var(--gold),var(--gold-2),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;position:relative}
+    .crestTitle::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,.18) 45%,transparent 60%);
+      mix-blend-mode:overlay;transform:translateX(-120%) skewX(-18deg);animation:sheen 6s ease-in-out infinite 1s;pointer-events:none}
     @keyframes sheen{50%{transform:translateX(120%) skewX(-18deg)}}
+    .subtitle{color:#C7CFDA;text-align:center;margin:10px auto 0;max-width:620px}
 
-    .subtitle{color:#BFC6D0; text-align:center; margin:10px auto 0; max-width:560px}
-    .foil{
-      position:absolute; inset:auto 10% -18% auto; width:320px; height:180px; border-radius:24px; opacity:.55;
-      background:radial-gradient(160px 80px at 70% 20%,rgba(240,220,164,.35),transparent 60%),
-                 linear-gradient(180deg,rgba(240,220,164,.08),rgba(168,136,71,.08));
-      border:1px solid rgba(240,220,164,.18); filter:blur(10px);
-      transform:rotate(-8deg);
-    }
-    @media (max-width:980px){ .foil{display:none} }
+    /* عنصر بصري: حلقة فولاذية تدور */
+    .ring{position:absolute;inset:auto 8% -20% auto;width:min(40vw,520px);aspect-ratio:1/1;border-radius:50%;
+      background:
+        radial-gradient(closest-side, rgba(255,255,255,.15), transparent 60%),
+        conic-gradient(from 10deg,#10161F,#2C3748,#10161F 60%);
+      border:1px solid #2A3546; box-shadow:inset 0 0 60px #0008, 0 10px 60px #0006;filter:saturate(1.1) contrast(1.05);
+      animation:ringSpin 18s linear infinite;opacity:.7}
+    @keyframes ringSpin{to{transform:rotate(360deg)}}
 
-    /* actions */
+    /* نقاط شرر خفيفة */
+    .spark{position:absolute;width:2px;height:2px;background:var(--gold-2);border-radius:2px;opacity:.8}
+    .s1{top:12%;left:16%;animation:rise 9s linear infinite}
+    .s2{top:22%;left:82%;animation:rise 11s linear infinite 1s}
+    .s3{top:46%;left:8%;animation:rise 13s linear infinite .3s}
+    @keyframes rise{0%{transform:translateY(0)}100%{transform:translateY(-120vh)}}
+
+    /* أزرار مغناطيسية */
     .cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:16px}
-    .btn{padding:13px 18px;border-radius:14px;border:1px solid var(--gold);cursor:pointer;font-weight:800}
+    .btn{padding:13px 18px;border-radius:14px;border:1px solid var(--gold);cursor:pointer;font-weight:800;position:relative;overflow:hidden}
     .btn-primary{background:var(--gold);color:#111;border-color:var(--gold)}
     .btn-ghost{background:transparent;color:var(--gold)}
+    .btn span{position:relative;z-index:2}
+    .btn::before{content:"";position:absolute;inset:-60% -40%;background:radial-gradient(180px 120px at var(--x,50%) var(--y,50%),rgba(255,255,255,.12),transparent 60%);transition:transform .12s}
     .btn:focus-visible{outline:2px solid var(--gold)}
 
-    /* selling points */
-    .bar{background:#0E141C;border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:18px}
-    .bar ul{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;padding:0;margin:0;list-style:none}
-    .bar li{display:flex;gap:10px;align-items:center;color:#C9CFD8}
-    .dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
+    /* ——————— Badges & نقاط بيع ——————— */
+    .badges{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+    .badge{border:1px solid var(--line);border-radius:999px;padding:8px 12px;color:#C9CFD8;background:rgba(255,255,255,.02)}
 
-    /* Featured */
+    /* ——————— شريط إحصائيات ——————— */
+    .stats{background:#0D131B;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .stats .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+    .stat{display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px}
+    .stat strong{font-size:22px;color:var(--gold-2)}
+    .stat span{color:#AEB6C2}
+    @media (max-width:800px){.stats .wrap{grid-template-columns:repeat(2,1fr)}}
+
+    /* ——————— Featured Grid ——————— */
     .section{max-width:var(--max);margin:44px auto 0;padding:0 16px}
     .section h2{margin:0 0 12px}
-    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
     .card{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:18px;overflow:hidden}
     .media{aspect-ratio:4/3;object-fit:cover;background:#0A0F16;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
-    .card:hover .media{transform:scale(1.04)}
+    .card:hover .media{transform:scale(1.05)}
     .body{padding:12px}
     .price{color:var(--gold-2);font-weight:900}
-    .reflect::after{
-      content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.22;
-      background:linear-gradient(12deg,transparent 0%,rgba(255,255,255,.15) 50%,transparent 80%);
-      transform:translateY(20%)
-    }
+    .reflect::after{content:"";position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:.22;background:linear-gradient(12deg,transparent 0%,rgba(255,255,255,.15) 50%,transparent 80%);transform:translateY(20%)}
 
-    /* floating sparks */
-    .spark{position:absolute; width:2px;height:2px; background:var(--gold-2); border-radius:2px; opacity:.7}
-    .s1{top:12%; left:16%; animation:rise 9s linear infinite}
-    .s2{top:22%; left:82%; animation:rise 11s linear infinite 1s}
-    .s3{top:46%; left:8%; animation:rise 13s linear infinite .3s}
-    @keyframes rise{0%{transform:translateY(0)} 100%{transform:translateY(-120vh)}}
+    /* ——————— شريط ماركات (ماركيه) ——————— */
+    .marquee{position:relative;overflow:hidden;border-block:1px solid var(--line);background:#0D131B;margin-top:40px}
+    .track{display:flex;gap:40px;white-space:nowrap;animation:scroll 28s linear infinite}
+    .track span{opacity:.8;color:#C7CFDA}
+    @keyframes scroll{to{transform:translateX(-50%)}}
 
-    /* magnetic buttons */
-    .magnet{position:relative; overflow:hidden}
-    .magnet span{position:relative;z-index:2}
-    .magnet::before{
-      content:"";position:absolute;inset:-60% -40%;background:radial-gradient(180px 120px at var(--x,50%) var(--y,50%),rgba(255,255,255,.12),transparent 60%);
-      transition:transform .15s; z-index:1;
-    }
+    /* ——————— معرض صور حرفية ——————— */
+    .gallery{display:grid;grid-template-columns:2fr 1fr 1fr;gap:12px;margin-top:28px}
+    .gallery .g{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--line);height:280px;background:#0C1117}
+    .g img{width:100%;height:100%;object-fit:cover;transform:scale(1.02);transition:transform .6s}
+    .g:hover img{transform:scale(1.07)}
+    @media (max-width:920px){.gallery{grid-template-columns:1fr 1fr}}
 
-    footer{border-top:1px solid var(--line);text-align:center;color:#A8AFB8;padding:20px 16px;margin-top:40px}
+    /* ——————— CTA سفلية ——————— */
+    .ctaBand{margin:44px 0;padding:22px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(180deg,#0E141C,#0B1016)}
+    .ctaBand .row{display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+
+    /* ——————— Footer ——————— */
+    footer{border-top:1px solid var(--line);text-align:center;color:#A8AFB8;padding:24px 16px;margin-top:48px}
+
+    /* ——————— حركة أقل ——————— */
     @media (prefers-reduced-motion:reduce){
-      .hero::before,.hero::after,.crest::after,.media,.s1,.s2,.s3{animation:none !important;transform:none !important}
+      .hero::before,.hero::after,.crestTitle::after,.media,.s1,.s2,.s3,.ring,.track{animation:none !important;transform:none !important}
     }
   </style>
 </head>
@@ -140,78 +155,161 @@
   <!-- NAV -->
   <nav class="nav" aria-label="التنقل">
     <div class="inner">
-      <strong class="brand">SteelCraft</strong>
-      <div class="links">
-        <a href="index.html" aria-current="page">الرئيسية</a>
-        <a href="catalog.html">الكاتالوج</a>
-        <a href="order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
+      <div class="container" style="display:flex;align-items:center;gap:14px">
+        <strong class="brand"><span class="crest">SteelCraft</span></strong>
+        <div class="links">
+          <a href="index.html" aria-current="page">الرئيسية</a>
+          <a href="catalog.html">الكاتالوج</a>
+          <a href="order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
+        </div>
       </div>
     </div>
   </nav>
 
   <!-- HERO -->
   <header class="hero">
-    <!-- sparky ambience -->
+    <!-- شرر -->
     <i class="spark s1"></i><i class="spark s2"></i><i class="spark s3"></i>
 
     <div class="hero-wrap">
       <div class="slab">
         <div class="plate reflect">
-          <h1 class="crest" aria-label="STEELCRAFT">STEELCRAFT</h1>
+          <h1 class="crestTitle" aria-label="STEELCRAFT">STEELCRAFT</h1>
           <p class="subtitle">فخامة حديد بتشطيب ملكي — أبواب، بوابات، شبك حماية، شبابيك ودرابزينات بمعايير تنفيذ عالية الدقة.</p>
+          <div class="badges" aria-hidden="true">
+            <span class="badge">مقاسات على الطبيعة</span>
+            <span class="badge">زجاج مقسّى / أقفال أمان</span>
+            <span class="badge">دهان فرن مقاوم للصدأ</span>
+          </div>
           <div class="cta" role="group" aria-label="إجراءات">
-            <a href="catalog.html"><button class="btn btn-primary magnet"><span>تصفّح الكتالوج</span></button></a>
-            <a href="order.html"><button class="btn btn-ghost magnet"><span>السلة / الإتمام</span></button></a>
+            <a href="catalog.html"><button class="btn btn-primary"><span>تصفّح الكتالوج</span></button></a>
+            <a href="order.html"><button class="btn btn-ghost"><span>السلة / الإتمام</span></button></a>
           </div>
         </div>
-        <div class="foil" aria-hidden="true"></div>
+        <div class="ring" aria-hidden="true"></div>
       </div>
 
       <div>
-        <div class="bar">
-          <ul>
-            <li><span class="dot"></span> مقاسات على الطبيعة</li>
-            <li><span class="dot"></span> زجاج مقسّى / أقفال أمان</li>
-            <li><span class="dot"></span> دهان فرن مقاوم للصدأ</li>
-          </ul>
+        <div class="pill" style="margin-bottom:12px">جودة تنفيذ ملكية</div>
+        <h2 style="margin:6px 0 8px">ننفّذ الحديد كقطعة فنية.</h2>
+        <p style="color:#C7CFDA">من القياس على الطبيعة حتى التركيب النهائي: نضمن استقامة، محاور دقيقة، ولـمعة فرن مقاومة للعوامل الجوية — تجربة شراء مرتّبة من أول زيارة.</p>
+        <div class="cta" style="justify-content:flex-start">
+          <a href="#featured" class="btn btn-ghost"><span>شاهد المختارات</span></a>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- شريط إحصائيات / ثقة -->
+  <section class="stats">
+    <div class="container wrap" aria-label="إحصائيات">
+      <div class="stat"><strong id="stat-projects">0+</strong><span>مشروع مُنجز</span></div>
+      <div class="stat"><strong id="stat-years">0</strong><span>سنوات خبرة</span></div>
+      <div class="stat"><strong id="stat-doors">0+</strong><span>أبواب وبوابات</span></div>
+      <div class="stat"><strong id="stat-rating">5.0</strong><span>تقييم عملاء</span></div>
+    </div>
+  </section>
+
   <!-- FEATURED -->
-  <section class="section" aria-labelledby="f">
+  <section id="featured" class="section" aria-labelledby="f">
     <h2 id="f">مختارات هذا الأسبوع</h2>
-    <div id="featured" class="grid" aria-live="polite" aria-busy="true">
-      <!-- Skeleton بسيط -->
-      <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite"></div><style>@keyframes shine{to{background-position:-200% 0}} </style><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
+    <div id="featuredGrid" class="grid" aria-live="polite" aria-busy="true">
+      <!-- Skeleton -->
+      <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite"></div><style>@keyframes shine{to{background-position:-200% 0}}</style><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
       <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite .1s"></div><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
       <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite .2s"></div><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
       <article class="card" aria-hidden="true"><div class="media" style="background:linear-gradient(90deg,#0D131B,#0F151E,#0D131B);animation:shine 1.2s linear infinite .3s"></div><div class="body"><div style="height:12px;background:#1a2130;border-radius:8px;width:70%"></div><div style="height:10px;background:#1a2130;border-radius:8px;width:40%;margin-top:8px"></div></div></article>
     </div>
   </section>
 
+  <!-- ماركيه شعارات (يمكن استبدالها بشعارات حقيقية لاحقًا) -->
+  <div class="marquee" aria-hidden="true">
+    <div class="container">
+      <div class="track">
+        <span>STEEL • GLASS • LOCKS • POWDER-COAT • CNC • STAINLESS • GALVANIZE •</span>
+        <span>STEEL • GLASS • LOCKS • POWDER-COAT • CNC • STAINLESS • GALVANIZE •</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- معرض حرفي بصري -->
+  <section class="section">
+    <h2>من ورشة العمل — لقطات قريبة</h2>
+    <div class="gallery">
+      <div class="g"><img loading="lazy" src="assets/hero/closeup-1.jpg" alt="ملمس حديد مُعالج وملمّع"></div>
+      <div class="g"><img loading="lazy" src="assets/hero/closeup-2.jpg" alt="تفصيل لحام دقيق"></div>
+      <div class="g"><img loading="lazy" src="assets/hero/closeup-3.jpg" alt="قفل أمان مع تشطيب ذهبي"></div>
+      <div class="g" style="grid-column: span 2"><img loading="lazy" src="assets/hero/closeup-4.jpg" alt="درابزين مع معالجة حواف راقية"></div>
+      <div class="g"><img loading="lazy" src="assets/hero/closeup-5.jpg" alt="بوابة بفتحات متناسقة"></div>
+    </div>
+  </section>
+
+  <!-- CTA سفلية -->
+  <section class="section">
+    <div class="ctaBand">
+      <div class="row">
+        <div>
+          <h3 style="margin:0 0 6px">جاهز نبدأ بقياس على الطبيعة؟</h3>
+          <p style="margin:0;color:#C7CFDA">اترك لنا طلبك وسنرتّب زيارة فنية خلال 24 ساعة داخل رام الله والقرى القريبة.</p>
+        </div>
+        <a href="order.html" class="btn btn-primary"><span>أرسل طلب قياس</span></a>
+      </div>
+    </div>
+  </section>
+
   <footer>© <span id="y"></span> SteelCraft — جميع الحقوق محفوظة</footer>
 
   <script type="module">
-    import {updateCartCount, fetchProducts} from './app.js';
+    // يمكنك الربط مع app.js الحالي إن وُجد: updateCartCount(), fetchProducts()
+    const hasApp = await (async()=>{
+      try{ await import('./app.js'); return true }catch{ return false }
+    })();
+
     // سنة
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // أزرار مغناطيسية
-    for (const b of document.querySelectorAll('.magnet')){
+    // أزرار إضاءة مغناطيسية
+    for (const b of document.querySelectorAll('.btn')){
       b.addEventListener('pointermove', e=>{
         const r=b.getBoundingClientRect(), x=(e.clientX-r.left)/r.width*100, y=(e.clientY-r.top)/r.height*100;
         b.style.setProperty('--x', x+'%'); b.style.setProperty('--y', y+'%');
       });
     }
 
-    // تحميل المنتجات المختارة
+    // أرقام الإحصائيات (قيم افتراضية قابلة للتعديل)
+    const stats={projects:340, years:18, doors:1200};
+    const elP=document.getElementById('stat-projects');
+    const elY=document.getElementById('stat-years');
+    const elD=document.getElementById('stat-doors');
+
+    function animateCount(el, to, suffix=""){const d=1200;const t=performance.now();
+      const step=(now)=>{const p=Math.min(1,(now-t)/d);el.textContent=Math.round(to*p)+(suffix||""); if(p<1)requestAnimationFrame(step)}; requestAnimationFrame(step)}
+    animateCount(elP, stats.projects, "+");
+    animateCount(elY, stats.years);
+    animateCount(elD, stats.doors, "+");
+
+    // تحميل المختارات
+    const grid = document.getElementById('featuredGrid');
+    async function fetchLocal(){
+      // Fallback بيانات بسيطة إذا لم يتوفر app.js
+      return [
+        {id:101, name:'بوابة سحاب — خط Modena', price:3450, image:'assets/products/gates/slide-1.jpg'},
+        {id:102, name:'باب رئيسي — لوح فولاذي + زجاج', price:2890, image:'assets/products/doors/main-2.jpg'},
+        {id:103, name:'درابزين درج — حديد مشغول', price:1750, image:'assets/products/rails/rail-3.jpg'},
+        {id:104, name:'شبك حماية — نمط Hexa', price:820, image:'assets/products/mesh/mesh-2.jpg'}
+      ]
+    }
+
     async function boot(){
       try{
-        updateCartCount();
-        const list = (await fetchProducts()).slice(0,4);
-        const grid = document.getElementById('featured');
+        let list;
+        if(hasApp){
+          const {updateCartCount, fetchProducts} = await import('./app.js');
+          if(typeof updateCartCount==='function') updateCartCount();
+          list = typeof fetchProducts==='function' ? (await fetchProducts()).slice(0,4) : await fetchLocal();
+        } else {
+          list = await fetchLocal();
+        }
         grid.setAttribute('aria-busy','false');
         grid.innerHTML = list.map(p=>`
           <article class="card reflect">
@@ -226,8 +324,7 @@
         `).join('');
       }catch(err){
         console.error(err);
-        document.getElementById('featured').innerHTML =
-          `<div class="card" style="padding:16px">تعذّر تحميل المنتجات الآن.</div>`;
+        grid.innerHTML = `<div class="card" style="padding:16px">تعذّر تحميل المنتجات الآن.</div>`;
       }
     }
     boot();

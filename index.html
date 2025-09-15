@@ -1,108 +1,164 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="no-js">
 <head>
+  <!-- ===== Meta Base ===== -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SteelCraft — أبواب وبوابات وشبك حماية</title>
-  <meta name="description" content="SteelCraft: تصنيع أبواب، بوابات، شبابيك، درابزينات وشبك حماية بمستوى تنفيذي فاخر. مقاسات دقيقة، خامات معتمدة، وتشطيب مخملي.">
+  <meta name="description" content="SteelCraft: تصنيع وتنفيذ أبواب حديد، بوابات، شبك حماية، شبابيك ودرابزينات بتشطيب فاخر ومقاسات دقيقة.">
+
+  <!-- ===== Theming ===== -->
+  <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#0f1216">
+
+  <!-- ===== Performance Hints ===== -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <!-- لو عندك خط ويب خارجي، اعمل له preload هنا -->
+  <!-- <link rel="preload" as="font" href="assets/YourFont.woff2" type="font/woff2" crossorigin> -->
+
+  <!-- Preload للأستایل ثم تحميله عادي (تحسين LCP) -->
+  <link rel="preload" href="./styles.css" as="style">
   <link rel="stylesheet" href="./styles.css">
 
+  <!-- ===== Open Graph / Twitter ===== -->
+  <meta property="og:locale" content="ar_AR">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="SteelCraft — أبواب وبوابات وشبك حماية">
+  <meta property="og:description" content="تنفيذ فاخر، خامات معتمدة، تسليم مضبوط.">
+  <meta property="og:image" content="assets/og-cover.jpg">
+  <meta property="og:url" content="./">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- ===== Structured Data (JSON-LD) ===== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "SteelCraft",
+    "url": "",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- ===== Critical Cosmetic (فوق الواجهة) ===== -->
   <style>
-    :root {
+    :root{
       --ink:#0f1216; --card:#12161b; --soft:#161b21;
       --line:#1e232b; --gold:#c7a86d; --gold-2:#e4c98a;
+      --max:1100px;
     }
-    body{ background:var(--ink); color:#e8eaed }
-    .nav{ background:rgba(18,22,27,.85); border-bottom:1px solid var(--line) }
-    .nav strong{ font-weight:900; letter-spacing:.3px }
+    /* Base */
+    html{scroll-behavior:smooth}
+    .no-js body{visibility:visible}
+    body{ margin:0; background:var(--ink); color:#e8eaed; font-family:system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Arabic", "Noto Naskh Arabic", Arial, sans-serif }
+    a{ color:inherit; text-decoration:none }
+    img{ max-width:100%; display:block }
+    .container{ max-width:var(--max); margin-inline:auto; padding-inline:16px }
+    .sr-only{ position:absolute !important; width:1px; height:1px; overflow:hidden; clip:rect(1px,1px,1px,1px) }
 
+    /* Nav */
+    .nav{ position:sticky; top:0; z-index:100; backdrop-filter:saturate(1.2) blur(6px);
+      background:rgba(18,22,27,.85); border-bottom:1px solid var(--line) }
+    .nav .inner{ display:flex; align-items:center; gap:16px; height:64px; }
+    .brand{ font-weight:900; letter-spacing:.3px }
+    .links{ margin-inline-start:auto; display:flex; gap:10px }
+    .links a{ padding:8px 12px; border-radius:12px }
+    .links a:focus-visible, .links a:hover{ outline:none; background:#1a2027 }
+
+    /* Hero */
     .hero{
       background:
-        radial-gradient(1200px 400px at 50% -10%, rgba(199,168,109,.25), transparent 60%),
-        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.55)),
+        radial-gradient(1200px 420px at 50% -10%, rgba(199,168,109,.22), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.58)),
         url('./assets/hero-bg.jpg') center/cover no-repeat;
-      padding:96px 16px; text-align:center; border-bottom:1px solid var(--line)
+      border-bottom:1px solid var(--line);
     }
-    .label{ display:inline-block; padding:6px 12px; border:1px solid var(--gold); color:var(--gold); border-radius:999px; font-size:12px }
-    .hero h1{
-      margin:12px 0 8px;
+    .hero-wrap{ padding:96px 16px; text-align:center }
+    .label{ display:inline-block; padding:6px 12px; border:1px solid var(--gold); color:var(--gold);
+      border-radius:999px; font-size:12px; letter-spacing:.3px }
+    h1.display{
+      margin:12px 0 8px; line-height:1.1;
       font-size:clamp(32px,6vw,56px);
       background:linear-gradient(90deg,var(--gold),var(--gold-2));
-      -webkit-background-clip:text;
-      -webkit-text-fill-color:transparent;
-      font-family:serif;
-      letter-spacing:2px;
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      font-family:serif; letter-spacing:2px;
     }
-    .hero p{ margin:0 auto 18px; max-width:760px; color:#cfd3da }
+    .lead{ margin:0 auto 18px; max-width:760px; color:#cfd3da }
+
+    /* Controls */
     .cta{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap }
     .btn{ padding:12px 18px; border-radius:12px; border:1px solid var(--gold); font-weight:800; cursor:pointer }
-    .btn-primary{ background:var(--gold); color:#101315; }
+    .btn-primary{ background:var(--gold); color:#101315; border-color:var(--gold) }
     .btn-ghost{ background:transparent; color:var(--gold) }
+    .btn:focus-visible{ outline:2px solid var(--gold) }
 
+    /* Selling points */
     .bar{ background:var(--soft); border:1px solid var(--line); border-radius:16px; padding:10px 14px; margin-top:18px }
     .bar ul{ display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:10px; padding:0; margin:0; list-style:none }
     .bar li{ display:flex; gap:10px; align-items:center; color:#c8ccd2 }
     .dot{ width:8px; height:8px; border-radius:50%; background:var(--gold) }
 
+    /* Cards */
     .section{ margin-top:44px }
     .section h2{ margin:0 0 12px; font-size:22px; color:#fff }
-    .card{ background:var(--card); border-color:var(--line) }
-    .product img{ height:240px }
-    .price{ color:var(--gold-2) }
+    .grid{ display:grid; gap:16px; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)) }
+    .card{ background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden }
+    .product .media{ aspect-ratio: 4 / 3; background:#0f1318; display:block; object-fit:cover }
+    .body{ padding:12px }
+    .price{ color:var(--gold-2); font-weight:900; }
+
+    /* Skeleton loading */
+    .skeleton{ animation: shimmer 1.3s linear infinite; background:
+      linear-gradient(90deg, rgba(255,255,255,.08), rgba(255,255,255,.18), rgba(255,255,255,.08));
+      background-size:200% 100% }
+    .sk-card{ border-radius:16px; border:1px solid var(--line); background:var(--card); overflow:hidden }
+    .sk-media{ height:160px }
+    .sk-line{ height:12px; margin:10px 12px; border-radius:8px }
+    @keyframes shimmer{ from{background-position:200% 0} to{background-position:-200% 0} }
+
+    /* Motion respect */
+    @media (prefers-reduced-motion: reduce){
+      *{ animation:none !important; transition:none !important; scroll-behavior:auto !important }
+    }
+
+    footer{ border-top:1px solid var(--line); color:#a8adb4; padding:20px 16px; text-align:center }
   </style>
 
-  <script type="module">
-    import {updateCartCount, fetchProducts} from './app.js';
-    window.toggleMenu = () => document.querySelector('.links')?.classList.toggle('open');
-
-    window.addEventListener('load', async ()=>{
-      updateCartCount();
-      const grid = document.getElementById('featured');
-      try{
-        const products = await fetchProducts();
-        grid.innerHTML = products.slice(0,4).map(p => `
-          <div class="card product">
-            <a href="./product.html?id=${p.id}">
-              <img src="${p.image}" alt="${p.name}">
-            </a>
-            <div class="body">
-              <a href="./product.html?id=${p.id}"><strong>${p.name}</strong></a>
-              <div class="price">${p.price.toFixed(2)} ₪</div>
-            </div>
-          </div>
-        `).join('');
-      }catch{ grid.innerHTML = `<div class="card" style="padding:16px">تعذّر التحميل.</div>`; }
-    });
-  </script>
+  <!-- JS flag for no-js class -->
+  <script>document.documentElement.classList.remove('no-js');</script>
 </head>
 <body>
+  <a class="sr-only" href="#main">تجاوز إلى المحتوى</a>
 
-  <!-- هيدر -->
-  <nav class="nav">
-    <div class="inner">
-      <strong>SteelCraft</strong>
-      <div class="links">
-        <a href="./index.html">الرئيسية</a>
-        <a href="./catalog.html">الكاتالوج</a>
-        <a href="./order.html" class="cart-pill">الطلبات <span class="cart-count">0</span></a>
+  <!-- ===== NAV ===== -->
+  <nav class="nav" aria-label="شريط التنقل">
+    <div class="inner container">
+      <span class="brand" aria-label="العلامة">SteelCraft</span>
+      <div class="links" role="menubar">
+        <a role="menuitem" href="./index.html" aria-current="page">الرئيسية</a>
+        <a role="menuitem" href="./catalog.html">الكاتالوج</a>
+        <a role="menuitem" class="cart-pill" href="./order.html">الطلبات <span class="cart-count">0</span></a>
       </div>
     </div>
   </nav>
 
-  <!-- HERO -->
-  <header class="hero">
-    <div class="container">
+  <!-- ===== HERO ===== -->
+  <header class="hero" role="banner">
+    <div class="hero-wrap container">
       <span class="label">تصنيع تنفيذي • خامات معتمدة</span>
-      <h1>STEELCRAFT</h1>
-      <p>أبواب، بوابات، شبك حماية، شبابيك ودرابزينات بمقاسات دقيقة وتشطيب نظيف. استلام مضمون وسعر واضح من أول محادثة.</p>
-      <div class="cta">
+      <h1 class="display" aria-label="SteelCraft">STEELCRAFT</h1>
+      <p class="lead">أبواب، بوابات، شبك حماية، شبابيك ودرابزينات بمقاسات دقيقة وتشطيب نظيف. استلام مضمون وسعر واضح من أول محادثة.</p>
+      <div class="cta" role="group" aria-label="الاجراءات">
         <a href="./catalog.html"><button class="btn btn-primary">تصفح الكتالوج</button></a>
         <a href="./order.html"><button class="btn btn-ghost">السلة / الإتمام</button></a>
       </div>
 
-      <!-- نقاط مختصرة -->
-      <div class="bar container">
+      <div class="bar container" aria-label="نقاط القوة">
         <ul>
           <li><span class="dot"></span> مقاسات على الطبيعة</li>
           <li><span class="dot"></span> زجاج مقسّى / أقفال أمان</li>
@@ -112,14 +168,81 @@
     </div>
   </header>
 
-  <main class="container">
-    <section class="section">
-      <h2>منتجات مختارة</h2>
-      <div id="featured" class="grid"></div>
+  <!-- ===== MAIN ===== -->
+  <main id="main" class="container" tabindex="-1">
+    <section class="section" aria-labelledby="featured-title">
+      <h2 id="featured-title">منتجات مختارة</h2>
+
+      <!-- Skeletons (يتشالوا بعد التحميل) -->
+      <div id="sk" class="grid" aria-hidden="true">
+        <div class="sk-card"><div class="skeleton sk-media"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:60%"></div></div>
+        <div class="sk-card"><div class="skeleton sk-media"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:60%"></div></div>
+        <div class="sk-card"><div class="skeleton sk-media"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:60%"></div></div>
+        <div class="sk-card"><div class="skeleton sk-media"></div><div class="skeleton sk-line"></div><div class="skeleton sk-line" style="width:60%"></div></div>
+      </div>
+
+      <div id="featured" class="grid" aria-live="polite" aria-busy="true"></div>
     </section>
   </main>
 
   <footer>© <span id="y"></span> SteelCraft — جميع الحقوق محفوظة</footer>
-  <script>document.getElementById('y').textContent = new Date().getFullYear()</script>
+
+  <!-- ===== App Code (Module) ===== -->
+  <script type="module">
+    import {updateCartCount, fetchProducts} from './app.js';
+
+    const yearSpan = document.getElementById('y');
+    yearSpan.textContent = new Date().getFullYear();
+
+    // Helper: يبني كرت منتج
+    const card = (p) => `
+      <article class="card product" itemscope itemtype="https://schema.org/Product">
+        <a href="./product.html?id=${p.id}" aria-label="تفاصيل ${p.name}">
+          <img class="media" loading="lazy"
+               src="${p.image}"
+               srcset="${p.image} 1x"
+               sizes="(max-width: 600px) 100vw, 33vw"
+               alt="${p.name}" itemprop="image">
+        </a>
+        <div class="body">
+          <div>
+            <a href="./product.html?id=${p.id}">
+              <strong itemprop="name">${p.name}</strong>
+            </a>
+          </div>
+          <meta itemprop="sku" content="${p.id}">
+          <div class="price" itemprop="offers" itemscope itemtype="https://schema.org/Offer" style="margin-top:8px">
+            <span itemprop="price">${Number(p.price).toFixed(2)}</span>
+            <span itemprop="priceCurrency">ILS</span> ₪
+            <link itemprop="availability" href="https://schema.org/InStock">
+          </div>
+        </div>
+      </article>`;
+
+    async function boot(){
+      try{
+        updateCartCount();
+
+        const grid = document.getElementById('featured');
+        const sk = document.getElementById('sk');
+
+        const products = await fetchProducts();
+        const top = products.slice(0,4);
+
+        grid.innerHTML = top.map(card).join('');
+        grid.setAttribute('aria-busy','false');
+        sk.remove(); // شيل السكلتون
+      }catch(e){
+        console.error(e);
+        const grid = document.getElementById('featured');
+        grid.innerHTML = `<div class="card" style="padding:16px">تعذّر التحميل الآن.</div>`;
+        grid.setAttribute('aria-busy','false');
+        // خفّض تأثير السكلتون لو فشل التحميل
+        const sk = document.getElementById('sk');
+        if(sk) sk.remove();
+      }
+    }
+    boot();
+  </script>
 </body>
 </html>
